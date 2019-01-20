@@ -5,19 +5,19 @@ import { AppComponent } from './app.component';
 import { AnimatedNumberComponent } from './components/animated-number/animated-number.component';
 import { InputComponent } from './components/input/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from './shared/shared.module';
+import { OnlyNumbersInputDirective } from './shared/directives/only-numbers-input.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     AnimatedNumberComponent,
-    InputComponent
+    InputComponent,
+    OnlyNumbersInputDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
-    SharedModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

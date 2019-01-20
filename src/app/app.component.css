@@ -1,4 +1,4 @@
-.content {
+:host {
     display: flex;
     justify-content: space-around;
     max-width: 900px;

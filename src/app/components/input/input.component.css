@@ -3,33 +3,23 @@
     flex-direction: column;
 }
 
-.number-form__input-container {
-    margin: 10px;
-}
-
-.number-form__button-container {
-    margin: 10px;
-}
-
-.number-form__input {
-    border-radius: 10px;
-    border: 1px solid #e4e4e4;
-    padding: 14px;
-}
-
-.number-form__input:active {
-    outline: none;
-}
-.number-form__input:focus {
-    outline: none;
-}
-
-.number-form__button {
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid #e4e4e4;
-    padding: 14px;
+.number-form button {
     cursor: pointer;
+}
+
+
+.form-element:active {
+    outline: none;
+}
+.form-element:focus {
+    outline: none;
+}
+
+.form-element {
+    margin: 10px;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+    padding: 14px;
 }
 
 .number-form__button:active {

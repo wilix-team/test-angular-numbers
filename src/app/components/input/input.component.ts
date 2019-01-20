@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -10,18 +10,16 @@ export class InputComponent implements OnInit {
 
   @Output()
   public updateNumberEvent = new EventEmitter<number>();
-  numberForm: FormGroup;
+  number: FormControl;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor() { }
 
   ngOnInit() {
-    this.numberForm = this.formBuilder.group({
-      number: [0, Validators.required]
-    });
+    this.number = new FormControl(0, Validators.required);
   }
 
   public updateNumber() {
-    this.updateNumberEvent.emit(this.numberForm.controls.number.value);
+    this.updateNumberEvent.emit(this.number.value);
   }
 
 }

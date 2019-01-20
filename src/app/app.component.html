@@ -1,8 +1,2 @@
-<div class="content">
-  <div class="content__input">
-    <app-input (updateNumberEvent)="updateNumber($event)"></app-input>
-  </div>
-  <div class="content__number">
-    <app-animated-number [number]="number"></app-animated-number>
-  </div>
-</div>
+<app-input class="content__input" (updateNumberEvent)="updateNumber($event)"></app-input>
+<app-animated-number class="content__number" [number]="number"></app-animated-number>

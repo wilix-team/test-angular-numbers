@@ -1,16 +1,16 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-animated-number',
   templateUrl: './animated-number.component.html',
   styleUrls: ['./animated-number.component.css']
 })
-export class AnimatedNumberComponent implements OnInit, OnChanges {
+export class AnimatedNumberComponent implements OnChanges {
   @Input()
   public number: number;
 
   private duration = 0.5;
-  private decimal = '.';
+  private decimalDelimiter = '.';
   private decimals = 2;
   private startTime: number;
   private countDown: boolean;
@@ -21,25 +21,20 @@ export class AnimatedNumberComponent implements OnInit, OnChanges {
 
   public result: string;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes.number.previousValue) {
+    if (changes.number && !changes.number.previousValue) {
       this.value = Number(changes.number.currentValue);
       this.prevValue = 0;
-      this.countDown = (this.prevValue > this.value);
+      this.countDown = this.prevValue > this.value;
       this.start();
     }
-    if (changes.number.currentValue) {
+    if (changes.number && changes.number.currentValue) {
       this.value = changes.number.currentValue;
       this.update(this.value);
     }
   }
 
-  private formatNumber(number: number, decimals: number, decimalDelimiter: string) {
+  private formatNumber(number: number, decimals: number, decimalDelimiter: string): string {
     const negative = (number < 0);
     let x: Array<string>;
     let x1: string;
@@ -51,11 +46,11 @@ export class AnimatedNumberComponent implements OnInit, OnChanges {
     return (negative ? '-' : '') + x1 + x2;
   }
 
-  private printValue(value: number) {
-    this.result = this.formatNumber(value, this.decimals, this.decimal) + '₽';
+  private printValue(value: number): void {
+    this.result = this.formatNumber(value, this.decimals, this.decimalDelimiter) + '₽';
   }
 
-  private count = (timestamp: number) => {
+  private count = (timestamp: number): void => {
     const duration = this.duration * 1000 || 2000;
     if (!this.startTime) { this.startTime = timestamp; }
 
@@ -83,7 +78,7 @@ export class AnimatedNumberComponent implements OnInit, OnChanges {
     }
   }
 
-  private update(newValue: number) {
+  private update(newValue: number): void {
     if (newValue === this.frameVal) {
       return;
     }
@@ -96,7 +91,7 @@ export class AnimatedNumberComponent implements OnInit, OnChanges {
     this.requestAnimationFrame = requestAnimationFrame(this.count);
   }
 
-  public start() {
+  public start(): void {
     this.requestAnimationFrame = requestAnimationFrame(this.count);
   }
 
