@@ -1,0 +1,19 @@
+.content {
+    display: flex;
+    justify-content: space-around;
+    max-width: 900px;
+    margin: 10vh auto 0 auto;
+}
+
+.content__input {
+    padding: 10px 40px 10px 40px;
+    border: 1px solid #e4e4e4;
+    border-radius: 10px;
+}
+
+.content__number {
+    padding: 10px 40px 10px 40px;
+    border: 1px solid #e4e4e4;
+    border-radius: 10px;
+    min-width: 100px;
+}

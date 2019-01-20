@@ -1,0 +1,10 @@
+<form [formGroup]="numberForm">
+  <div class="number-form">
+    <div class="number-form__input-container">
+      <input type="number" class="number-form__input" appOnlyNumbersInput formControlName="number">
+    </div>
+    <div class="number-form__button-container">
+      <button (click)="updateNumber()" class="number-form__button">Обновить</button>
+    </div>
+  </div>
+</form>

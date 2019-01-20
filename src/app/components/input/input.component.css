@@ -1,0 +1,46 @@
+.number-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.number-form__input-container {
+    margin: 10px;
+}
+
+.number-form__button-container {
+    margin: 10px;
+}
+
+.number-form__input {
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+    padding: 14px;
+}
+
+.number-form__input:active {
+    outline: none;
+}
+.number-form__input:focus {
+    outline: none;
+}
+
+.number-form__button {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+    padding: 14px;
+    cursor: pointer;
+}
+
+.number-form__button:active {
+    outline: none;
+}
+.number-form__button:focus {
+    outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
