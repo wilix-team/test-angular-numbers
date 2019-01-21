@@ -40,7 +40,7 @@ describe('InputComponent', () => {
     let emittedValue: number;
 
     component.updateNumberEvent.subscribe((value) => emittedValue = value);
-    component.number.patchValue(5);
+    component.numberForm.controls.number.patchValue(5);
     component.updateNumber();
 
     expect(emittedValue).toBe(5);

@@ -1,4 +1,4 @@
-<div class="number-form">
-  <input type="number" class="form-element" [formControl]="number">
+<form [formGroup]="numberForm" class="number-form">
+  <input type="number" class="form-element" formControlName="number">
   <button (click)="updateNumber()" class="form-element number-form__button">Обновить</button>
-</div>
+</form>
