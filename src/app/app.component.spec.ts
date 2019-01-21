@@ -1,27 +1,67 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-describe('AppComponent', () => {
+import { InputComponent } from './components/input/input.component';
+import { AnimatedNumberComponent } from './components/animated-number/animated-number.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, EventEmitter, Output, Directive } from '@angular/core';
+import { By } from '@angular/platform-browser';    
+
+
+fdescribe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
+  @Directive({
+    selector: 'app-input'
+  })
+  class MockInputDirective {
+    @Output('updateNumberEvent')
+    public updateNumberEventEmmitter = new EventEmitter<number>();
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        InputComponent,
+        AnimatedNumberComponent,
+        MockInputDirective
       ],
-    }).compileComponents();
+      imports: [
+        FormsModule,
+        ReactiveFormsModule
+      ]
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(AppComponent);
+      component = fixture.componentInstance;
+    });
   }));
+
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   }));
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
+
+  it('should call updateNumber() if event catched', async(() => {
+    spyOn(component, 'updateNumber');
+
+    const mockInputElement = fixture.debugElement.query(By.directive(MockInputDirective));
+    const mockInputComponent = mockInputElement.injector.get(MockInputDirective) as MockInputDirective
+  
+    mockInputComponent.updateNumberEventEmmitter.emit(0);
+    expect(component.updateNumber).toHaveBeenCalled(); 
   }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to test-angular-numbers!');
+
+  it('should update number when updateNumber() is called', async(() => {
+    component.updateNumber(5)
+    expect(component.number).toBe(5); 
   }));
 });
+
+
+// @Component({
+//   selector: 'app-input'
+// })
+// export class MockInputComponent {
+//   @Output()
+//   public updateNumberEvent = new EventEmitter<number>();
+// }
