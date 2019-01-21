@@ -7,7 +7,7 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from
 })
 export class AnimatedNumberComponent implements OnChanges {
   @Input()
-  public number;
+  public number: number;
 
   @Output()
   public onAnimated = new EventEmitter<boolean>();
@@ -16,7 +16,7 @@ export class AnimatedNumberComponent implements OnChanges {
   private decimalDelimiter = '.';
   private decimals = 2;
   private startTime: number;
-  private countDown: boolean; // should we decrement or not
+  private countDown: boolean; // indicate count anumation direction
   private frameVal: number;
   private value: number;
   private prevValue: number;
@@ -29,7 +29,7 @@ export class AnimatedNumberComponent implements OnChanges {
       this.value = Number(changes.number.currentValue);
       this.prevValue = 0;
       this.countDown = this.prevValue > this.value;
-      this.start();
+      this.update();
     } else if (changes.number && changes.number.previousValue) {
       this.value = changes.number.currentValue;
       this.prevValue = changes.number.previousValue;
@@ -37,7 +37,13 @@ export class AnimatedNumberComponent implements OnChanges {
     }
   }
 
-  private formatNumber(number: number, decimals: number, decimalDelimiter: string): string {
+  /**
+   * Format number to price format
+   * @param number Number to format
+   * @param decimals How many decimals show
+   * @param decimalDelimiter Delimiter for decimals
+   */
+  private formatNumberToPrice(number: number, decimals: number, decimalDelimiter: string): string {
     const negative = (number < 0);
     let x: Array<string>;
     let x1: string;
@@ -46,13 +52,16 @@ export class AnimatedNumberComponent implements OnChanges {
     x = stringNumber.split('.');
     x1 = x[0];
     x2 = x.length > 1 ? decimalDelimiter + x[1] : '';
-    return (negative ? '-' : '') + x1 + x2;
+    return (negative ? '-' : '') + x1 + x2  + '₽';
   }
 
   private printValue(value: number): void {
-    this.result = this.formatNumber(value, this.decimals, this.decimalDelimiter) + '₽';
+    this.result = this.formatNumberToPrice(value, this.decimals, this.decimalDelimiter);
   }
 
+  /**
+   * Render function
+   */
   private count = (timestamp: number): void => {
     const duration = this.duration * 1000 || 2000;
 
@@ -82,7 +91,15 @@ export class AnimatedNumberComponent implements OnChanges {
     }
   }
 
-  private update(newValue: number): void {
+  /**
+   * Set or Update value to field
+   * @param newValue Number to set
+   */
+  private update(newValue?: number): void {
+    if (newValue == undefined) {
+      this.requestAnimationFrame = requestAnimationFrame(this.count);
+    }
+
     if (newValue === this.frameVal) {
       return;
     }
@@ -92,10 +109,6 @@ export class AnimatedNumberComponent implements OnChanges {
     this.prevValue = this.frameVal;
     this.value = newValue;
     this.countDown = (this.prevValue > this.value);
-    this.requestAnimationFrame = requestAnimationFrame(this.count);
-  }
-
-  private start(): void {
     this.requestAnimationFrame = requestAnimationFrame(this.count);
   }
 
