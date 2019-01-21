@@ -7,7 +7,7 @@ import { Component, EventEmitter, Output, Directive } from '@angular/core';
 import { By } from '@angular/platform-browser';    
 
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
@@ -45,23 +45,14 @@ fdescribe('AppComponent', () => {
     spyOn(component, 'updateNumber');
 
     const mockInputElement = fixture.debugElement.query(By.directive(MockInputDirective));
-    const mockInputComponent = mockInputElement.injector.get(MockInputDirective) as MockInputDirective
+    const mockInputComponent = mockInputElement.injector.get(MockInputDirective) as MockInputDirective;
   
     mockInputComponent.updateNumberEventEmmitter.emit(0);
     expect(component.updateNumber).toHaveBeenCalled(); 
   }));
 
   it('should update number when updateNumber() is called', async(() => {
-    component.updateNumber(5)
+    component.updateNumber(5);
     expect(component.number).toBe(5); 
   }));
 });
-
-
-// @Component({
-//   selector: 'app-input'
-// })
-// export class MockInputComponent {
-//   @Output()
-//   public updateNumberEvent = new EventEmitter<number>();
-// }
